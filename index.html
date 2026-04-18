@@ -3,136 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz Cumpleaños Stefanie</title>
+    <title>Para Stefanie</title>
     <style>
+        :root {
+            --color-principal: #ff4d6d;
+            --color-secundario: #ffb3c1;
+            --bg: #0a0a0a;
+        }
+
         body {
             margin: 0;
-            padding: 0;
-            background: #0a0a0a;
+            background: var(--bg);
             color: #fff;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            overflow-x: hidden;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .pantalla {
+            position: absolute;
+            width: 90%;
+            max-width: 600px;
             text-align: center;
-        }
-
-        .container {
+            transition: all 0.8s ease;
             padding: 20px;
-            z-index: 10;
         }
 
-        h1 {
-            font-size: 3rem;
-            color: #ff4d6d;
-            text-shadow: 0 0 10px #ff4d6d;
-            margin-bottom: 10px;
+        .oculto {
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            pointer-events: none;
         }
 
-        .full-name {
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            color: #ffb3c1;
-            margin-bottom: 30px;
+        .visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 77, 109, 0.3);
-            max-width: 500px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 30px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 77, 109, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        .lyrics {
-            font-style: italic;
-            color: #ffccd5;
-            margin: 20px 0;
-            line-height: 1.6;
-        }
+        h1 { color: var(--color-principal); font-size: 2.5rem; margin-bottom: 10px; }
+        .nombre-completo { color: var(--color-secundario); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 20px; }
+        
+        p { line-height: 1.6; font-size: 1.1rem; color: #eee; }
 
-        .btn-musica {
-            background: #ff4d6d;
+        .btn-magico {
+            background: var(--color-principal);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 15px 30px;
             border-radius: 50px;
-            cursor: pointer;
+            font-size: 1rem;
             font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
             transition: 0.3s;
-            margin-top: 20px;
         }
 
-        .btn-musica:hover {
-            background: #ff758f;
-            transform: scale(1.05);
+        .btn-magico:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 77, 109, 0.6); }
+
+        .carta {
+            text-align: left;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 10px;
         }
 
-        /* Corazones animados de fondo */
-        .heart {
-            position: fixed;
-            color: #ff4d6d;
-            font-size: 20px;
-            user-select: none;
-            z-index: 1;
-            animation: fall linear forwards;
-        }
+        .carta::-webkit-scrollbar { width: 5px; }
+        .carta::-webkit-scrollbar-thumb { background: var(--color-principal); border-radius: 10px; }
 
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
-        }
+        /* Corazones */
+        .heart { position: fixed; color: var(--color-principal); z-index: -1; animation: float linear forwards; }
+        @keyframes float { to { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div id="pantalla1" class="pantalla visible">
         <div class="card">
-            <h1>¡Felices 18, Fany!</h1>
-            <div class="full-name">STEFANIE SOFIA CASTRO GARAY</div>
-            
-            <p>Un día como hoy llegaste al mundo para hacerlo más brillante. 
-            Este 18 de abril es especial, no solo por tus 18 años, sino por la persona increíble en la que te has convertido.</p>
-
-            <div class="lyrics" id="target-lyrics">
-                "Eres la casualidad más bonita que me pasó..."
-            </div>
-
-            <p>Espero que este pequeño detalle te recuerde lo especial que sigues siendo para mí.</p>
-
-            <button class="btn-musica" onclick="playMusic()">🎵 Escuchar nuestra canción</button>
+            <h1>¡Felices 18 años!</h1>
+            <div class="nombre-completo">STEFANIE SOFIA CASTRO GARAY</div>
+            <p>Hoy es 18 de abril, un día que el calendario marca como especial, pero que para mí es el más importante del año.</p>
+            <p>Has llegado a una etapa hermosa de tu vida, y no quería dejar pasar este momento sin recordarte lo valiosa que eres.</p>
+            <button class="btn-magico" onclick="mostrarCarta()">🎵 Escuchar nuestra canción y leer algo para ti</button>
         </div>
     </div>
 
-    <iframe id="musica" width="0" height="0" src="https://www.youtube.com/embed/TU_ID_DE_YOUTUBE?enablejsapi=1" frameborder="0" allow="autoplay"></iframe>
+    <div id="pantalla2" class="pantalla oculto">
+        <div class="card carta">
+            <h2 style="color: var(--color-principal);">Para la mujer más especial...</h2>
+            <p>Fany,</p>
+            <p>Escribo esto porque a veces las palabras se las lleva el viento, pero lo que se queda plasmado aquí es lo que realmente siente mi corazón.</p>
+            <p>Eres, sin duda alguna, la mujer más hermosa y especial que ha pasado por mi vida. Sé que las cosas no han sido fáciles y que hemos pasado por mucho, pero quiero que sepas que <strong>he cambiado</strong>. Este tiempo me ha servido para entender lo mucho que vales y lo mucho que te extraño.</p>
+            <p>Mi mayor deseo hoy, además de que seas inmensamente feliz en tu cumpleaños, es tener la oportunidad de <strong>cuidarte y amarte como realmente te mereces</strong>. Me encantaría volver a empezar, demostrarte que puedo ser ese hombre que te dé paz, seguridad y un amor incondicional.</p>
+            <p>Disfruta tus 18, reina. Aquí siempre habrá alguien que te ve como lo más increíble del mundo.</p>
+            <p style="text-align: center; color: var(--color-secundario);">— Con todo mi amor.</p>
+        </div>
+    </div>
+
+    <div id="player"></div>
 
     <script>
-        function playMusic() {
-            // Nota: Para que funcione perfecto en GitHub, te recomiendo usar un archivo .mp3 local o un widget de Spotify/Youtube
-            alert("Aquí empezaría a sonar esa canción que tanto te recuerda a ella.");
+        // CONFIGURACIÓN DE MÚSICA
+        // Reemplaza 'TU_ID_AQUÍ' con el código de YouTube (ej: dQw4w9WgXcQ)
+        const videoId = 'TU_ID_AQUÍ'; 
+
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: videoId,
+                playerVars: { 'autoplay': 0, 'controls': 0, 'showinfo': 0, 'rel': 0 },
+                events: { 'onReady': onPlayerReady }
+            });
         }
 
-        // Generador de corazones
+        function onPlayerReady(event) {
+            // El reproductor está listo
+        }
+
+        function mostrarCarta() {
+            document.getElementById('pantalla1').classList.remove('visible');
+            document.getElementById('pantalla1').classList.add('oculto');
+            
+            setTimeout(() => {
+                document.getElementById('pantalla2').classList.remove('oculto');
+                document.getElementById('pantalla2').classList.add('visible');
+                player.playVideo(); // Inicia la música
+            }, 800);
+        }
+
+        // Sistema de corazones
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            heart.style.opacity = Math.random();
+            heart.style.top = '110vh';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
             document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+            setTimeout(() => heart.remove(), 7000);
         }
-
         setInterval(createHeart, 300);
     </script>
 </body>
