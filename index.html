@@ -15,142 +15,124 @@
             margin: 0;
             background: var(--bg);
             color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
 
         .pantalla {
             position: absolute;
-            width: 90%;
-            max-width: 600px;
+            width: 95%;
+            max-width: 650px;
             text-align: center;
-            transition: all 0.8s ease;
+            transition: all 1s ease-in-out;
             padding: 20px;
         }
 
-        .oculto {
-            opacity: 0;
-            transform: scale(0.9) translateY(20px);
-            pointer-events: none;
-        }
-
-        .visible {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
+        .oculto { opacity: 0; transform: scale(0.9) translateY(30px); pointer-events: none; }
+        .visible { opacity: 1; transform: scale(1) translateY(0); }
 
         .card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             padding: 40px;
             border-radius: 30px;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 77, 109, 0.2);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
         }
 
-        h1 { color: var(--color-principal); font-size: 2.5rem; margin-bottom: 10px; }
-        .nombre-completo { color: var(--color-secundario); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 20px; }
+        h1 { color: var(--color-principal); font-size: 2.8rem; margin-bottom: 5px; text-shadow: 0 0 15px rgba(255, 77, 109, 0.5); }
+        .nombre-completo { color: var(--color-secundario); font-size: 1rem; letter-spacing: 3px; margin-bottom: 25px; text-transform: uppercase; font-weight: 300; }
         
-        p { line-height: 1.6; font-size: 1.1rem; color: #eee; }
+        .carta-texto {
+            text-align: left;
+            line-height: 1.9;
+            font-size: 1.1rem;
+            color: #f0f0f0;
+            max-height: 65vh;
+            overflow-y: auto;
+            padding-right: 20px;
+        }
+
+        /* Scrollbar estilizada */
+        .carta-texto::-webkit-scrollbar { width: 4px; }
+        .carta-texto::-webkit-scrollbar-thumb { background: var(--color-principal); border-radius: 10px; }
 
         .btn-magico {
-            background: var(--color-principal);
+            background: linear-gradient(45deg, #ff4d6d, #ff758f);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 18px 40px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
             margin-top: 25px;
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-            transition: 0.3s;
+            transition: 0.4s;
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
         }
 
-        .btn-magico:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 77, 109, 0.6); }
+        .btn-magico:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(255, 77, 109, 0.5); }
 
-        .carta {
-            text-align: left;
-            max-height: 70vh;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .carta::-webkit-scrollbar { width: 5px; }
-        .carta::-webkit-scrollbar-thumb { background: var(--color-principal); border-radius: 10px; }
-
-        /* Corazones */
-        .heart { position: fixed; color: var(--color-principal); z-index: -1; animation: float linear forwards; }
-        @keyframes float { to { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
+        .heart { position: fixed; color: var(--color-principal); z-index: -1; animation: float linear forwards; opacity: 0.6; }
+        @keyframes float { to { transform: translateY(-115vh) rotate(45deg); opacity: 0; } }
     </style>
 </head>
 <body>
 
+    <audio id="miMusica" src="musica.mp3"></audio>
+
     <div id="pantalla1" class="pantalla visible">
         <div class="card">
-            <h1>¡Felices 18 años!</h1>
-            <div class="nombre-completo">STEFANIE SOFIA CASTRO GARAY</div>
-            <p>Hoy es 18 de abril, un día que el calendario marca como especial, pero que para mí es el más importante del año.</p>
-            <p>Has llegado a una etapa hermosa de tu vida, y no quería dejar pasar este momento sin recordarte lo valiosa que eres.</p>
-            <button class="btn-magico" onclick="mostrarCarta()">🎵 Escuchar nuestra canción y leer algo para ti</button>
+            <h1>¡Felices 18!</h1>
+            <div class="nombre-completo">Stefanie Sofia Castro Garay</div>
+            <p>Hoy el mundo celebra que hace 18 años nació una mujer increíble. Pero para mí, este día es mucho más que una fecha en el calendario; es el momento perfecto para decirte todo lo que guardo aquí dentro.</p>
+            <button class="btn-magico" onclick="abrirCarta()">Toca para tu sorpresa 🎵</button>
         </div>
     </div>
 
     <div id="pantalla2" class="pantalla oculto">
-        <div class="card carta">
-            <h2 style="color: var(--color-principal);">Para la mujer más especial...</h2>
-            <p>Fany,</p>
-            <p>Escribo esto porque a veces las palabras se las lleva el viento, pero lo que se queda plasmado aquí es lo que realmente siente mi corazón.</p>
-            <p>Eres, sin duda alguna, la mujer más hermosa y especial que ha pasado por mi vida. Sé que las cosas no han sido fáciles y que hemos pasado por mucho, pero quiero que sepas que <strong>he cambiado</strong>. Este tiempo me ha servido para entender lo mucho que vales y lo mucho que te extraño.</p>
-            <p>Mi mayor deseo hoy, además de que seas inmensamente feliz en tu cumpleaños, es tener la oportunidad de <strong>cuidarte y amarte como realmente te mereces</strong>. Me encantaría volver a empezar, demostrarte que puedo ser ese hombre que te dé paz, seguridad y un amor incondicional.</p>
-            <p>Disfruta tus 18, reina. Aquí siempre habrá alguien que te ve como lo más increíble del mundo.</p>
-            <p style="text-align: center; color: var(--color-secundario);">— Con todo mi amor.</p>
+        <div class="card">
+            <h2 style="color: var(--color-principal); margin-bottom: 15px; font-size: 1.8rem;">Para la mujer de mi vida</h2>
+            <div class="carta-texto">
+                <p>Hola, Fany.</p>
+                
+                <p>Hoy cumples 18 años, una edad en la que el mundo te dice que ya eres grande, pero para mí siempre serás esa mujer con la luz más especial que he conocido. Escribo esto porque hay sentimientos que no caben en un mensaje común, y quería que tuvieras algo hecho exclusivamente para ti, algo que pudieras guardar y leer cada vez que olvides lo valiosa que eres.</p>
+                
+                <p>Quiero ser totalmente honesto contigo: <strong>Eres la mujer más hermosa y especial que ha pasado por mi vida.</strong> No pasa un solo día en el que no recuerde lo que significas para mí, ni un solo momento en el que no agradezca haberte conocido. Sé que las cosas no han sido fáciles, que hemos tenido momentos difíciles y que quizás, en el pasado, no siempre supe demostrar lo que sentía de la manera correcta.</p>
+                
+                <p>Pero este tiempo que ha pasado me ha servido para mucho más de lo que imaginas. Me ha servido para mirarme por dentro, para reflexionar y, sobre todo, para <strong>cambiar como persona</strong>. He aprendido a valorar los detalles que antes pasaba por alto, a entender que el amor no solo se dice, sino que se demuestra con paciencia, con respeto y con una entrega total.</p>
+                
+                <p>Hoy veo la vida de otra manera. He crecido, he madurado y he entendido que lo que teníamos es algo que no se encuentra dos veces. Por eso, mi mayor deseo hoy —además de que seas inmensamente feliz en tu cumpleaños— es tener algún día la oportunidad de <strong>cuidarte y amarte como realmente se debe</strong>. Quiero ser ese apoyo incondicional en tus días grises y el primero en celebrar tus alegrías.</p>
+                
+                <p>Desearía tenerte de nuevo a mi lado para demostrarte que este cambio es real, para darte la paz que te mereces y para construir momentos que borren cualquier tristeza del pasado. Porque para mí, no hay nadie que se compare contigo. Tu inteligencia, tu forma de ser y esa esencia única que tienes te hacen ser la mujer que siempre soñé tener cerca.</p>
+                
+                <p>Eres única, <strong>Stefanie Sofia Castro Garay</strong>. Tu nombre no solo representa a una gran mujer, sino que representa todo lo que me hace querer ser mejor cada día. Espero que esta nueva etapa que empiezas hoy, tus 18 años, sea el inicio de un camino lleno de bendiciones, metas cumplidas y muchísima felicidad.</p>
+                
+                <p>Disfruta tu día al máximo, reina. Aquí siempre habrá alguien que te admira profundamente, que te piensa con cariño y que daría lo que fuera por verte sonreír siempre.</p>
+                
+                <p style="text-align: center; color: var(--color-secundario); font-weight: bold; margin-top: 30px; font-size: 1.3rem;">¡Feliz cumpleaños, Fany! ❤️</p>
+            </div>
         </div>
     </div>
 
-    <div id="player"></div>
-
     <script>
-        // CONFIGURACIÓN DE MÚSICA
-        // Reemplaza 'TU_ID_AQUÍ' con el código de YouTube (ej: dQw4w9WgXcQ)
-        const videoId = 'nb8Cnlo_-_A'; 
+        function abrirCarta() {
+            const audio = document.getElementById('miMusica');
+            audio.play().catch(e => console.log("Error de audio: ", e));
 
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '0',
-                width: '0',
-                videoId: videoId,
-                playerVars: { 'autoplay': 0, 'controls': 0, 'showinfo': 0, 'rel': 0 },
-                events: { 'onReady': onPlayerReady }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // El reproductor está listo
-        }
-
-        function mostrarCarta() {
             document.getElementById('pantalla1').classList.remove('visible');
             document.getElementById('pantalla1').classList.add('oculto');
             
             setTimeout(() => {
                 document.getElementById('pantalla2').classList.remove('oculto');
                 document.getElementById('pantalla2').classList.add('visible');
-                player.playVideo(); // Inicia la música
-            }, 800);
+            }, 1000);
         }
 
-        // Sistema de corazones
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
@@ -158,11 +140,11 @@
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.top = '110vh';
             heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            heart.style.animationDuration = Math.random() * 4 + 5 + 's';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 7000);
+            setTimeout(() => heart.remove(), 8000);
         }
-        setInterval(createHeart, 300);
+        setInterval(createHeart, 250);
     </script>
 </body>
 </html>
